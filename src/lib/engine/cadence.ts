@@ -25,7 +25,7 @@ export function isWithinSendWindow(config: SendWindowConfig, currentDate: Date =
     const formatter = new Intl.DateTimeFormat('en-US', {
       timeZone: config.timezone || 'UTC',
       hour12: false,
-      weekday: 'numeric', // 1 = Sunday ... 7 = Saturday
+      weekday: 'long',
       hour: '2-digit',
       minute: '2-digit',
       second: '2-digit',
@@ -37,9 +37,17 @@ export function isWithinSendWindow(config: SendWindowConfig, currentDate: Date =
       partMap[part.type] = part.value;
     }
 
-    // Convert JS Sunday=1 to ISO Monday=1 ... Sunday=7
-    const jsDay = parseInt(partMap.weekday || '1', 10);
-    const isoDay = jsDay === 1 ? 7 : jsDay - 1;
+    // Convert weekday name to ISO Monday=1 ... Sunday=7
+    const weekdayMap: Record<string, number> = {
+      Monday: 1,
+      Tuesday: 2,
+      Wednesday: 3,
+      Thursday: 4,
+      Friday: 5,
+      Saturday: 6,
+      Sunday: 7,
+    };
+    const isoDay = weekdayMap[partMap.weekday || 'Sunday'] || 7;
 
     if (!config.sendDays.includes(isoDay)) {
       return { allowed: false, reason: `Outside allowed sending days (Current ISO day: ${isoDay})` };

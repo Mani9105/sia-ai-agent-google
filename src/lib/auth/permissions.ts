@@ -1,4 +1,4 @@
-import { UserRole } from '../types/database';
+import { UserRole } from '../../types/database';
 
 export interface UserSessionContext {
   userId: string;
