@@ -26,7 +26,7 @@ export interface PersonalizationResult {
 }
 
 const DEFAULT_TIMEOUT_MS = 8000;
-const DEFAULT_MODEL = 'gemini-1.5-flash';
+const DEFAULT_MODEL = 'gemini-3.6-flash';
 
 /**
  * Generates personalized email content using Google Gemini with strict schema validation.
