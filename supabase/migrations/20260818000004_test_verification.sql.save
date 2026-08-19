@@ -1,4 +1,4 @@
--- ============================================================================
+       sxbgujnhk-- ============================================================================
 -- SIA AI AGENT - PHASE 1 COMPREHENSIVE VERIFICATION & TEST SUITE
 -- Executes complete assertion testing for RLS isolation, cross-workspace
 -- integrity, 4-tier suppression, atomic quota reservation, send state machine,
@@ -215,13 +215,6 @@ BEGIN
 
     RAISE NOTICE '[PASS] Test 6: Quota rollback successfully decremented quota and transitioned state to failed.';
 
-    -- Reset test quota before Test 7.
-    UPDATE email_accounts
-    SET sent_today = 0,
-        last_reset_date = CURRENT_DATE
-    WHERE id = v_inbox_a1
-      AND workspace_id = v_ws_a;
-
     -- ------------------------------------------------------------------------
     -- TEST 7: CONFIRM SEND SUCCESS & EVENT RECORDING
     -- Re-reserve quota and confirm success with Gmail ID.
@@ -254,13 +247,6 @@ BEGIN
     END IF;
 
     RAISE NOTICE '[PASS] Test 7: Send confirmation updated message state to sent and created audit event.';
-
-    -- Reset test quota before Test 8.
-    UPDATE email_accounts
-    SET sent_today = 0,
-        last_reset_date = CURRENT_DATE
-    WHERE id = v_inbox_a1
-      AND workspace_id = v_ws_a;
 
     -- ------------------------------------------------------------------------
     -- TEST 8: CRASH RECONCILIATION WORKER BEHAVIOR

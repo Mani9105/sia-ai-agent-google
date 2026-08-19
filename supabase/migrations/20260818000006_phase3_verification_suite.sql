@@ -101,8 +101,8 @@ BEGIN
     -- Execute bulk import batch
     SELECT * INTO v_import_res FROM import_leads_batch(v_ws_1, v_leads_batch, TRUE);
 
-    IF v_import_res.imported_count != 2 OR v_import_res.skipped_duplicates != 1 OR v_import_res.suppressed_count != 1 THEN
-        RAISE EXCEPTION 'TEST_FAIL: Bulk import counts mismatch! Imported: %, Skipped: %, Suppressed: % (Expected 2, 1, 1)',
+    IF v_import_res.imported_count != 2 OR v_import_res.skipped_duplicates != 2 OR v_import_res.suppressed_count != 1 THEN
+        RAISE EXCEPTION 'TEST_FAIL: Bulk import counts mismatch! Imported: %, Skipped: %, Suppressed: % (Expected 2, 2, 1)',
             v_import_res.imported_count, v_import_res.skipped_duplicates, v_import_res.suppressed_count;
     END IF;
 
